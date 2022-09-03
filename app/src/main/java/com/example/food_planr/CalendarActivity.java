@@ -1,8 +1,5 @@
 package com.example.food_planr;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -15,9 +12,13 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -109,94 +110,133 @@ public class CalendarActivity extends AppCompatActivity implements BottomNavigat
         TextView satMealText = (TextView) findViewById(R.id.saturdayMealText);
         TextView sunMealText = (TextView) findViewById(R.id.sundayMealText);
 
+        //Setting content of text views to noMeals if the user has not added a meal to that day yet
+        String noMeals = "No Meals Added";
+        //Monday
         if(calData.get("monRes").toString().equals("")){
-            monMealText.setText("No meals Added");
+            monMealText.setText(noMeals);
         }
         else{
             monMealText.setText(calData.get("monRes").toString());
         }
-        tuesMealText.setText(calData.get("tueRes").toString());
-        wedMealText.setText(calData.get("wedRes").toString());
-        thurTextMeal.setText(calData.get("thuRes").toString());
-        friMealText.setText(calData.get("friRes").toString());
-        satMealText.setText(calData.get("satRes").toString());
-        sunMealText.setText(calData.get("sunRes").toString());
+        //Tuesday
+        if(calData.get("tueRes").toString().equals("")){
+            tuesMealText.setText(noMeals);
+        }
+        else{
+            tuesMealText.setText(calData.get("tueRes").toString());
+        }
+        //Wednesday
+        if(calData.get("wedRes").toString().equals("")){
+            wedMealText.setText(noMeals);
+        }
+        else{
+            wedMealText.setText(calData.get("wedRes").toString());;
+        }
+        //Thursday
+        if(calData.get("thuRes").toString().equals("")){
+            thurTextMeal.setText(noMeals);
+        }
+        else{
+            thurTextMeal.setText(calData.get("thuRes").toString());
+        }
+        //Friday
+        if(calData.get("friRes").toString().equals("")){
+            friMealText.setText(noMeals);
+        }
+        else{
+            friMealText.setText(calData.get("friRes").toString());
+        }
+        //Saturday
+        if(calData.get("satRes").toString().equals("")){
+            satMealText.setText(noMeals);
+        }
+        else{
+            satMealText.setText(calData.get("satRes").toString());
+        }
+        //Sunday
+        if(calData.get("sunRes").toString().equals("")){
+            sunMealText.setText(noMeals);
+        }
+        else{
+            sunMealText.setText(calData.get("sunRes").toString());
+        }
 
         //Setting up the delete buttons for each day
         Button mondayDelButton = (Button) findViewById(R.id.mondayDeleteButton);
-        if(!monMealText.getText().toString().equals("")){
+        if(!monMealText.getText().toString().equals(noMeals)){
             mondayDelButton.setVisibility(View.VISIBLE);
         }
         mondayDelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDelOptions(monMealText.getText().toString());
+                showDelOptions(monMealText.getText().toString(),db,"monday");
             }
         });
 
         Button tuesdayDelButton = (Button) findViewById(R.id.tuesdayDeleteButton);
-        if(!tuesMealText.getText().toString().equals("")){
+        if(!tuesMealText.getText().toString().equals(noMeals)){
             tuesdayDelButton.setVisibility(View.VISIBLE);
         }
         tuesdayDelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDelOptions(tuesMealText.getText().toString());
+                showDelOptions(tuesMealText.getText().toString(),db,"tuesday");
             }
         });
 
         Button wednesdayDelButton = (Button) findViewById(R.id.wednesdayDeleteButton);
-        if(!wedMealText.getText().toString().equals("")){
+        if(!wedMealText.getText().toString().equals(noMeals)){
             wednesdayDelButton.setVisibility(View.VISIBLE);
         }
         wednesdayDelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDelOptions(wedMealText.getText().toString());
+                showDelOptions(wedMealText.getText().toString(),db,"wednesday");
             }
         });
 
         Button thursdayDelButton = (Button) findViewById(R.id.thursdayDeleteButton);
-        if(!thurTextMeal.getText().toString().equals("")){
+        if(!thurTextMeal.getText().toString().equals(noMeals)){
             thursdayDelButton.setVisibility(View.VISIBLE);
         }
         thursdayDelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDelOptions(thurTextMeal.getText().toString());
+                showDelOptions(thurTextMeal.getText().toString(),db,"thursday");
             }
         });
 
         Button fridayDelButton = (Button) findViewById(R.id.fridayDeleteButton);
-        if(!friMealText.getText().toString().equals("")){
+        if(!friMealText.getText().toString().equals(noMeals)){
             fridayDelButton.setVisibility(View.VISIBLE);
         }
         fridayDelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDelOptions(friMealText.getText().toString());
+                showDelOptions(friMealText.getText().toString(),db,"friday");
             }
         });
 
         Button saturdayDelButton = (Button) findViewById(R.id.saturdayDeleteButton);
-        if(!satMealText.getText().toString().equals("")){
+        if(!satMealText.getText().toString().equals(noMeals)){
             saturdayDelButton.setVisibility(View.VISIBLE);
         }
         saturdayDelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDelOptions(satMealText.getText().toString());
+                showDelOptions(satMealText.getText().toString(),db,"saturday");
             }
         });
 
         Button sundayDelButton = (Button) findViewById(R.id.sundayDeleteButton);
-        if(!sunMealText.getText().toString().equals("")){
+        if(!sunMealText.getText().toString().equals(noMeals)){
             sundayDelButton.setVisibility(View.VISIBLE);
         }
         sundayDelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDelOptions(sunMealText.getText().toString());
+                showDelOptions(sunMealText.getText().toString(),db,"sunday");
             }
         });
 
@@ -217,14 +257,15 @@ public class CalendarActivity extends AppCompatActivity implements BottomNavigat
                     monMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            db.addMealToCal(currentWeek,monMealText.getText().toString(), "MONDAY", menuItem.getTitle().toString());
-                            if(monMealText.getText().toString().equals("No meals Added")){
-                                monMealText.setText(menuItem.getTitle().toString());
+                            if(monMealText.getText().toString().equals(noMeals)){
+                                db.addMealToCal(currentWeek,"", "MONDAY", menuItem.getTitle().toString());
                             }
                             else{
-                                monMealText.setText(monMealText.getText().toString() + "\n" + menuItem.getTitle().toString());
+                                db.addMealToCal(currentWeek,monMealText.getText().toString(), "MONDAY", menuItem.getTitle().toString());
                             }
                             mondayDelButton.setVisibility(View.VISIBLE);
+                            finish();
+                            startActivity(getIntent());
                             return false;
                         }
                     });
@@ -250,14 +291,15 @@ public class CalendarActivity extends AppCompatActivity implements BottomNavigat
                     tuesMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            db.addMealToCal(currentWeek,tuesMealText.getText().toString(), "TUESDAY", menuItem.getTitle().toString());
-                            if(tuesMealText.getText().toString().equals("")){
-                                tuesMealText.setText(menuItem.getTitle().toString());
+                            if(tuesMealText.getText().toString().equals(noMeals)){
+                                db.addMealToCal(currentWeek,"", "TUESDAY", menuItem.getTitle().toString());
                             }
                             else{
-                                tuesMealText.setText(tuesMealText.getText().toString() + "\n" + menuItem.getTitle().toString());
+                                db.addMealToCal(currentWeek,tuesMealText.getText().toString(), "TUESDAY", menuItem.getTitle().toString());
                             }
                             tuesdayDelButton.setVisibility(View.VISIBLE);
+                            finish();
+                            startActivity(getIntent());
                             return false;
                         }
                     });
@@ -284,14 +326,15 @@ public class CalendarActivity extends AppCompatActivity implements BottomNavigat
                     wedMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            db.addMealToCal(currentWeek,wedMealText.getText().toString(), "WEDNESDAY", menuItem.getTitle().toString());
-                            if(wedMealText.getText().toString().equals("")){
-                                wedMealText.setText(menuItem.getTitle().toString());
+                            if(wedMealText.getText().toString().equals(noMeals)){
+                                db.addMealToCal(currentWeek,"", "WEDNESDAY", menuItem.getTitle().toString());
                             }
                             else{
-                                wedMealText.setText(wedMealText.getText().toString() + "\n" + menuItem.getTitle().toString());
+                                db.addMealToCal(currentWeek,wedMealText.getText().toString(), "WEDNESDAY", menuItem.getTitle().toString());
                             }
                             wednesdayDelButton.setVisibility(View.VISIBLE);
+                            finish();
+                            startActivity(getIntent());
                             return false;
                         }
                     });
@@ -318,14 +361,15 @@ public class CalendarActivity extends AppCompatActivity implements BottomNavigat
                     thurMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            db.addMealToCal(currentWeek,thurTextMeal.getText().toString(), "THURSDAY", menuItem.getTitle().toString());
-                            if(thurTextMeal.getText().toString().equals("")){
-                                thurTextMeal.setText(menuItem.getTitle().toString());
+                                if(thurTextMeal.getText().toString().equals(noMeals)){
+                                db.addMealToCal(currentWeek,"", "THURSDAY", menuItem.getTitle().toString());
                             }
                             else{
-                                thurTextMeal.setText(thurTextMeal.getText().toString() + "\n" + menuItem.getTitle().toString());
+                                db.addMealToCal(currentWeek,thurTextMeal.getText().toString(), "THURSDAY", menuItem.getTitle().toString());
                             }
                             thursdayDelButton.setVisibility(View.VISIBLE);
+                            finish();
+                            startActivity(getIntent());
                             return false;
                         }
                     });
@@ -352,14 +396,15 @@ public class CalendarActivity extends AppCompatActivity implements BottomNavigat
                     friMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            db.addMealToCal(currentWeek,friMealText.getText().toString(), "FRIDAY", menuItem.getTitle().toString());
-                            if(friMealText.getText().toString().equals("")){
-                                friMealText.setText(menuItem.getTitle().toString());
+                            if(friMealText.getText().toString().equals(noMeals)){
+                                db.addMealToCal(currentWeek,"", "FRIDAY", menuItem.getTitle().toString());
                             }
                             else{
-                                friMealText.setText(friMealText.getText().toString() + "\n" + menuItem.getTitle().toString());
+                                db.addMealToCal(currentWeek,friMealText.getText().toString(), "FRIDAY", menuItem.getTitle().toString());
                             }
                             fridayDelButton.setVisibility(View.VISIBLE);
+                            finish();
+                            startActivity(getIntent());
                             return false;
                         }
                     });
@@ -386,14 +431,15 @@ public class CalendarActivity extends AppCompatActivity implements BottomNavigat
                     satMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            db.addMealToCal(currentWeek,satMealText.getText().toString(), "SATURDAY", menuItem.getTitle().toString());
-                            if(satMealText.getText().toString().equals("")){
-                                satMealText.setText(menuItem.getTitle().toString());
+                            if(satMealText.getText().toString().equals(noMeals)){
+                                db.addMealToCal(currentWeek,"", "SATURDAY", menuItem.getTitle().toString());
                             }
                             else{
-                                satMealText.setText(satMealText.getText().toString() + "\n" + menuItem.getTitle().toString());
+                                db.addMealToCal(currentWeek,satMealText.getText().toString(), "SATURDAY", menuItem.getTitle().toString());
                             }
                             saturdayDelButton.setVisibility(View.VISIBLE);
+                            finish();
+                            startActivity(getIntent());
                             return false;
                         }
                     });
@@ -420,14 +466,15 @@ public class CalendarActivity extends AppCompatActivity implements BottomNavigat
                     sunMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            db.addMealToCal(currentWeek,sunMealText.getText().toString(), "SUNDAY", menuItem.getTitle().toString());
-                            if(sunMealText.getText().toString().equals("")){
-                                sunMealText.setText(menuItem.getTitle().toString());
+                            if(sunMealText.getText().toString().equals(noMeals)){
+                                db.addMealToCal(currentWeek,"", "SUNDAY", menuItem.getTitle().toString());
                             }
                             else{
-                                sunMealText.setText(sunMealText.getText().toString() + "\n" + menuItem.getTitle().toString());
+                                db.addMealToCal(currentWeek,sunMealText.getText().toString(), "SUNDAY", menuItem.getTitle().toString());
                             }
                             sundayDelButton.setVisibility(View.VISIBLE);
+                            finish();
+                            startActivity(getIntent());
                             return false;
                         }
                     });
@@ -440,7 +487,7 @@ public class CalendarActivity extends AppCompatActivity implements BottomNavigat
 
     }
 
-    private void showDelOptions(String allRecipes){
+    private void showDelOptions(String allRecipes, DataBaseHelper db, String dayOfWeek){
         final String[] selection = {""}; //String stored this way as it has to be final
         String[] recipesArraywithBlank = allRecipes.split("\n");
         String[] recipesArraywithoutBlank = Arrays.copyOfRange(recipesArraywithBlank,1,recipesArraywithBlank.length);//removing the first element from the array as this is always blank
@@ -456,11 +503,56 @@ public class CalendarActivity extends AppCompatActivity implements BottomNavigat
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                /**
-                 * Method to remove item from array and database
-                 * use String str = String.join(",", arr); to turn array into string
-                 */
-                Toast.makeText(CalendarActivity.this, "Deleted " + selection[0], Toast.LENGTH_SHORT).show();
+                if(selection[0].equals("")){
+                    Toast.makeText(CalendarActivity.this, "No meal selected. \nNothing was deleted", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    String[] currentUser = db.getUser();
+                    String weekID = currentUser[0];
+                    ContentValues result = db.getCalInfo(weekID);
+
+                    String[] currentMeals;
+                    if (dayOfWeek.equals("monday")) {
+                        String mealsString = result.get("monRes").toString();
+                        currentMeals = mealsString.split("\n");
+                    } else if (dayOfWeek.equals("tuesday")) {
+                        String mealsString = result.get("tueRes").toString();
+                        currentMeals = mealsString.split("\n");
+                    } else if (dayOfWeek.equals("wednesday")) {
+                        String mealsString = result.get("wedRes").toString();
+                        currentMeals = mealsString.split("\n");
+                    } else if (dayOfWeek.equals("thursday")) {
+                        String mealsString = result.get("thuRes").toString();
+                        currentMeals = mealsString.split("\n");
+                    } else if (dayOfWeek.equals("friday")) {
+                        String mealsString = result.get("friRes").toString();
+                        currentMeals = mealsString.split("\n");
+                    } else if (dayOfWeek.equals("saturday")) {
+                        String mealsString = result.get("satRes").toString();
+                        currentMeals = mealsString.split("\n");
+                    } else {
+                        String mealsString = result.get("sunRes").toString();
+                        currentMeals = mealsString.split("\n");
+                    }
+
+                    String[] newMeals = new String[currentMeals.length - 1];
+                    int x = 0; //counter for newMeals array
+                    Boolean done = false; //bool to make it only remove the first instance of a meal
+
+                    for (int j = 0; j <= currentMeals.length - 1; j++) {
+                        if (currentMeals[j].equals(selection[0]) && !done) {
+                            done = true;
+                        } else {
+                            newMeals[x] = currentMeals[j];
+                            x++;
+                        }
+                    }
+
+                    String newMealsString = String.join("\n", newMeals);
+                    db.updateMeals(weekID, dayOfWeek, newMealsString);
+                    finish();
+                    startActivity(getIntent());
+                }
             }
         });
 

@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         recyclerView.setAdapter(adpater);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        if (adpater.getItemCount() == 0){
+            Toast.makeText(this, "No recipes found", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

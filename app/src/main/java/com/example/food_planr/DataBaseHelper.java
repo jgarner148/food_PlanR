@@ -100,7 +100,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean deleteRecipe(String recipeTitle){
-        String query = "DELETE FROM " + recipeTableName + " WHERE " + COL_RECIPE_TITLE + " = '" + recipeTitle + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(recipeTableName, COL_RECIPE_TITLE + " = '" +  recipeTitle + "'", null)>0;
     }
@@ -256,6 +255,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             dayCol = COL_RECIPE_TITLES_SUN;
         }
         String query = "UPDATE " + mealCalTableName + " SET " + dayCol + " = '" + currentContent + "\n" + textBeingAdded + "' WHERE " + COL_WEEK_ID + " = " + weekID;
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(query);
+    }
+
+    public void updateMeals(String weekID, String dayOfWeek, String newContent){
+        String dayCol;
+        if(dayOfWeek.equals("monday")){
+            dayCol = COL_RECIPE_TITLES_MON;
+        }
+        else if(dayOfWeek.equals("tuesday")){
+            dayCol = COL_RECIPE_TITLES_TUE;
+        }
+        else if(dayOfWeek.equals("wednesday")){
+            dayCol = COL_RECIPE_TITLES_WED;
+        }
+        else if(dayOfWeek.equals("thursday")){
+            dayCol = COL_RECIPE_TITLES_THU;
+        }
+        else if(dayOfWeek.equals("friday")){
+            dayCol = COL_RECIPE_TITLES_FRI;
+        }
+        else if(dayOfWeek.equals("saturday")){
+            dayCol = COL_RECIPE_TITLES_SAT;
+        }
+        else{
+            dayCol = COL_RECIPE_TITLES_SUN;
+        }
+
+        String query = "UPDATE " + mealCalTableName + " SET " + dayCol + " = '" + newContent + "' WHERE " + COL_WEEK_ID + " = " + weekID;
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(query);
     }
